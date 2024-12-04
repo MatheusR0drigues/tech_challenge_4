@@ -1,15 +1,17 @@
 from flask import Flask, request, jsonify
 from tensorflow.keras.models import load_model
 import numpy as np
-import pandas as pd
-from sklearn.preprocessing import MinMaxScaler
 import joblib
 
 app = Flask(__name__)
 
-# Carregar o modelo treinado e o escalador
+# Caminhos
 MODEL_PATH = "models/lstm_model.h5"
+SCALER_PATH = "models/scaler.pkl"
+
+# Carregar o modelo treinado e o escalador
 model = load_model(MODEL_PATH)
+scaler = joblib.load(SCALER_PATH)
 
 # Função auxiliar para processar os dados
 def preprocess_input(data, sequence_length=60):
@@ -23,15 +25,14 @@ def preprocess_input(data, sequence_length=60):
     Returns:
         np.array: Sequência formatada para o modelo.
     """
-    # Normalizar os dados
-    scaler = MinMaxScaler()
-    data_scaled = scaler.fit_transform(np.array(data).reshape(-1, 1))
+    # Normalizar os dados usando o escalador carregado
+    data_scaled = scaler.transform(np.array(data).reshape(-1, 1))
 
     # Criar sequência
     X = []
     for i in range(len(data_scaled) - sequence_length + 1):
         X.append(data_scaled[i:i + sequence_length])
-    return np.array(X), scaler
+    return np.array(X)
 
 @app.route("/predict", methods=["POST"])
 def predict():
@@ -54,7 +55,7 @@ def predict():
             return jsonify({"error": "É necessário pelo menos 60 valores para previsão."}), 400
 
         # Pré-processar os dados
-        X, scaler = preprocess_input(prices)
+        X = preprocess_input(prices)
 
         # Fazer previsão
         predictions = model.predict(X)

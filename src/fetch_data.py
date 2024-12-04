@@ -25,8 +25,8 @@ def fetch_stock_data(symbol, start_date, end_date, output_dir="data/raw"):
 if __name__ == "__main__":
     # Configurações iniciais
     symbol = "AAPL"  
-    start_date = "2018-01-01"
-    end_date = "2024-02-12"
+    start_date = "2018-12-01"
+    end_date = "2024-08-01"
     
     print("Baixando dados...")
     file_path = fetch_stock_data(symbol, start_date, end_date)
