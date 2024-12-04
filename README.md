@@ -151,10 +151,3 @@ Métricas de avaliação no conjunto de testes:
    ```
 
 4. Use a API via script ou ferramenta como Postman.
-
----
-
-## Contato
-
-Projeto desenvolvido por [Seu Nome]. Entre em contato para mais informações!
-```
