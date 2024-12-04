@@ -23,6 +23,7 @@ TECH_CHALLENGE_4/
 │
 ├── notebooks/
 │   ├── data_analysis.ipynb
+│   ├── uso_api.ipynb
 │
 ├── src/
 │   ├── api.py
@@ -32,8 +33,6 @@ TECH_CHALLENGE_4/
 │   ├── requirements.txt
 │
 ├── predict/
-│
-└── uso_api.ipynb
 ```
 
 ---
